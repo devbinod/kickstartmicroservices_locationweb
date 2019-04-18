@@ -3,9 +3,11 @@ package np.com.pantbinod.locationweb.service;
 import np.com.pantbinod.locationweb.modal.Location;
 import np.com.pantbinod.locationweb.resp.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class LocationServiceImpl implements LocationService {
 
     @Autowired

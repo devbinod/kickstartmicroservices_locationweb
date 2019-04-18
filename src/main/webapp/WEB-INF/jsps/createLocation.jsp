@@ -11,16 +11,20 @@
     <title>Create Location</title>
 </head>
 <body>
-
-    <form action="#" method="post">
+<pre>
+    <form action="saveLocation" method="post">
 
         Id: <input type="text" name="id"/>
         Code: <input type="text" name="code"/>
         Name: <input type="text" name="name"/>
-        Type: Urban <input type="radio" name="type"/>
-                Rural <input type="radio" name="type"/>
+        Type: Urban <input type="radio" name="type" value="Urban"/>
+                Rural <input type="radio" name="type" value="Rural"/>
         <input type="submit" value="save"/>
     </form>
+</pre>
+${msg}
 
+<a href="displayLocation">Display All Location</a>
 </body>
+
 </html>
