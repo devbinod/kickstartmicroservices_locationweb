@@ -1,22 +1,63 @@
 package np.com.pantbinod.locationweb.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import np.com.pantbinod.locationweb.modal.Location;
+import np.com.pantbinod.locationweb.service.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class LocationController {
 
-    @RequestMapping("/showCreate")
-    public String showCreate(){
-        return "createLocation";
+    @Autowired
+    private LocationService locationService;
+
+    @GetMapping({"/", "/createLocation"})
+    public String hello(Model model) {
+        return "jsps/createLocation";
     }
 
-    @RequestMapping("/show")
-    public ModelAndView getCreate(){
-        ModelAndView modelAndView = new ModelAndView();
-        System.out.println("called.........");
-        modelAndView.setViewName("createLocation");
-        return modelAndView;
+
+    @RequestMapping("/saveLocation")
+    public String saveLocation(@ModelAttribute("location")Location location, ModelMap modelMap){
+        Location location1= locationService.saveLocation(location);
+        String message= "sucessfully saved ..."+location.getId();
+        modelMap.addAttribute("msg",message);
+
+        return "jsps/createLocation";
+    }
+
+    @RequestMapping("/displayLocation")
+    public String displayLocation(ModelMap modelMap){
+        modelMap.addAttribute("location",locationService.getAllLocation());
+        return "jsps/displayLocation";
+    }
+
+    @RequestMapping("/deleteLocation")
+    public String deleteLocation(@RequestParam("id") int id, ModelMap modelMap){
+        Location location = new Location();
+        location.setId(id);
+        locationService.delteLocation(location);
+        modelMap.addAttribute("location", locationService.getAllLocation());
+        return "jsps/displayLocation";
+    }
+
+    @RequestMapping("/updateLocation")
+    public String updateLocation(@RequestParam("id") int id, ModelMap modelMap){
+        Location location = locationService.getLocationById(id);
+        modelMap.addAttribute("location", location);
+        return "jsps/updateLocation";
+
+    }
+
+    @PostMapping("/updateLocation")
+    public String updateLocationVAlue(@ModelAttribute("location")Location location, ModelMap modelMap){
+        locationService.updateLocation(location);
+        modelMap.addAttribute("location", locationService.getAllLocation());
+        return "jsps/updateLocation";
+
     }
 }
