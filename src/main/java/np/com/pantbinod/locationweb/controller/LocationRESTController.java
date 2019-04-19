@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/locations")
@@ -36,5 +37,10 @@ public class LocationRESTController {
         Location location = new Location();
         location.setId(id);
         locationRepository.delete(location);
+    }
+
+    @GetMapping("{id}")
+    public Optional<Location> getSingleLocation(@PathVariable("id") int id){
+        return locationRepository.findById(id);
     }
 }
