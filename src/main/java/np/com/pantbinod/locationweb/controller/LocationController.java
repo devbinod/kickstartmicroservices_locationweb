@@ -2,6 +2,7 @@ package np.com.pantbinod.locationweb.controller;
 
 import np.com.pantbinod.locationweb.modal.Location;
 import np.com.pantbinod.locationweb.service.LocationService;
+import np.com.pantbinod.locationweb.util.EmailUtilImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ public class LocationController {
 
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private EmailUtilImpl emailUtil;
 
     @GetMapping({"/", "/createLocation"})
     public String hello(Model model) {
@@ -24,6 +27,9 @@ public class LocationController {
     @RequestMapping("/saveLocation")
     public String saveLocation(@ModelAttribute("location")Location location, ModelMap modelMap){
         Location location1= locationService.saveLocation(location);
+        emailUtil.sendEmail("binodpant.nep@gmail.com", "Location Saved",
+                "Location Saved Sucessfully and return respective id"
+                );
         String message= "sucessfully saved ..."+location.getId();
         modelMap.addAttribute("msg",message);
 

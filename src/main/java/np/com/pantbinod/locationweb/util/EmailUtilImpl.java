@@ -27,9 +27,10 @@ public class EmailUtilImpl implements EmailUtil {
         message.setSubject(subject);
         messageHelper.setText(body);
         javaMailSender.send(message);
+            System.out.println("successfull saved...");
 
         }catch (Exception e){
-
+            System.out.println(e);
         }
 
     }
